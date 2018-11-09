@@ -1,15 +1,18 @@
-package dispatcher;
+package client2;
 
 import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
 
+import static client2.Client2Start.CHAT_RECORD;
+
+
 /**
  * 请求分发器
  */
-public class DispatcherServlet {
-    static Logger LOG = Logger.getLogger(DispatcherServlet.class);
+public class DispatcherServlet2 {
+    static Logger LOG = Logger.getLogger(DispatcherServlet2.class);
 
     public static void handleRequest(Socket socket) {
         BufferedReader clientReader = null;
@@ -24,7 +27,7 @@ public class DispatcherServlet {
             while ((line = clientReader.readLine()) != null) {
                 clientMsg.append(line + "\n");
             }
-            LOG.info(clientMsg.toString());
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>"+clientMsg.toString()+"</p></html>"));
             String result = "{\"code\":\"200\"}";
             clientWriter.write(result);//收到信息回执
             clientWriter.flush();

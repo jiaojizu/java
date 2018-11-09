@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.net.Socket;
 
+import static client2.Client2Start.CHAT_RECORD;
+
 public class Client2Api {
     static Logger LOG = Logger.getLogger(Client2Api.class);
 
@@ -30,7 +32,7 @@ public class Client2Api {
             LOG.info(getMessage(serverReader));
             serverScoket.shutdownInput();
         } catch (IOException e) {
-            LOG.error("", e);
+            LOG.error("链接服务器出现异常", e);
         } finally {
             try {
                 disConnection();
@@ -90,7 +92,7 @@ public class Client2Api {
     public static void loginout() {
         try {
             getConnection();
-            String msg = "{\"method\":\"loginout\",\"userName\":\"client_1\"}";
+            String msg = "{\"method\":\"loginout\",\"userName\":\"client_2\"}";
             serverWriter.write(msg);//写入消息到服务端
             serverWriter.flush();
             serverScoket.shutdownOutput();
@@ -111,13 +113,14 @@ public class Client2Api {
     public static void sendMsg(String message) {
         try {
             getConnection();
-            LOG.info("【client2】:"+message);
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>【client2】:"+message+"</p></html>"));
             String msg = "{\"method\":\"sendMsg\",\"sourceName\":\"client_2\",\"userName\":\"client_1\",\"msg\":\"" + message + "\"}";
             serverWriter.write(msg);//写入消息到服务端
             serverWriter.flush();
             serverScoket.shutdownOutput();
             //显示客户端返回消息
-            LOG.info(getMessage(serverReader));
+            //显示客户端返回消息
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>"+getMessage(serverReader)+"</p></html>"));
             serverScoket.shutdownInput();
         } catch (IOException e) {
             LOG.error("", e);

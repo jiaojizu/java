@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.net.Socket;
 
+import static client1.Client1Start.CHAT_RECORD;
+
 public class Client1Api {
     static Logger LOG = Logger.getLogger(Client1Api.class);
 
@@ -111,13 +113,13 @@ public class Client1Api {
     public static void sendMsg(String message) {
         try {
             getConnection();
-            LOG.info("【client1】:"+message);
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>【client1】:"+message+"</p></html>"));
             String msg = "{\"method\":\"sendMsg\",\"sourceName\":\"client_1\",\"userName\":\"client_2\",\"msg\":\"" + message + "\"}";
             serverWriter.write(msg);//写入消息到服务端
             serverWriter.flush();
             serverScoket.shutdownOutput();
             //显示客户端返回消息
-            LOG.info(getMessage(serverReader));
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>"+getMessage(serverReader)+"</p></html>"));
             serverScoket.shutdownInput();
         } catch (IOException e) {
             LOG.error("", e);
@@ -131,13 +133,13 @@ public class Client1Api {
     }
 
     public static void main(String[] args) {
-        if ("loginout".equals(args[0])) {
-            loginout();
-        } else if ("login".equals(args[0])) {
-            regUser();
-        } else if ("send".equals(args[0])) {
-            sendMsg(args[1]);
-        }
+//        if ("loginout".equals(args[0])) {
+//            loginout();
+//        } else if ("login".equals(args[0])) {
+//            regUser();
+//        } else if ("send".equals(args[0])) {
+            sendMsg("来自客户端1的消息");
+//        }
     }
 
 
