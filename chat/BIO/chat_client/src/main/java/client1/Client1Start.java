@@ -105,8 +105,8 @@ public class Client1Start {
         jTextArea.setBounds(40, 330, 700, 50);
 
 
-        JButton jButton = new JButton("发送给client_1");
-        jButton.setBounds(303, 400, 100, 30);
+        JButton jButton = new JButton("发送给client_2");
+        jButton.setBounds(303, 400, 150, 30);
         jButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

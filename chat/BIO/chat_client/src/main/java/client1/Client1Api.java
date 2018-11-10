@@ -119,7 +119,7 @@ public class Client1Api {
             serverWriter.flush();
             serverScoket.shutdownOutput();
             //显示客户端返回消息
-            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p>"+getMessage(serverReader)+"</p></html>"));
+            CHAT_RECORD.setText(CHAT_RECORD.getText().replace("</html>","<p><font size='2' color='green'>"+getMessage(serverReader)+"</font></p></html>"));
             serverScoket.shutdownInput();
         } catch (IOException e) {
             LOG.error("", e);
