@@ -77,6 +77,7 @@ public class ServerStart {
                         //处理读事件，并且有可读数据
                         if (key.isReadable()) {
                             DispatcherServlet.handleRequest(key);
+                            key.interestOps(key.interestOps()&(~SelectionKey.OP_READ));
                         }
                         //处理
                         if (key.isWritable()){
